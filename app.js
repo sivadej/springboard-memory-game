@@ -1,9 +1,17 @@
-// Sivadej Kitchpanich
+//let shuffledCards = shuffle([ '01', '01', '02', '02', '03', '03', '04', '04' ]); //to set image src and IDs for matching pairs
+const imgIds = ['01','02','03','04']; //instead of manually entering pairs, loop and push into new array twice, then shuffle
+//image src will be formatted as images/${imgId}.jpg
+let shuffledCards = [];
+for (imgId of imgIds){
+	shuffledCards.push(imgId);
+	shuffledCards.push(imgId);
+}
+shuffledCards = shuffle(shuffledCards);
 
 const counter = document.querySelector('#counter'); //total card "flips" per game
 const newGameBtn = document.querySelector('#new-game-btn');
 const gameBoard = document.querySelector('#gameboard');
-let shuffledCards = shuffle([ '01', '01', '02', '02', '03', '03', '04', '04' ]); //to set image src and IDs for matching pairs
+
 let bestScore = localStorage.getItem('best-score');
 let movesCounted = 0;
 let cardsInPlay = 0;
@@ -40,7 +48,7 @@ gameBoard.addEventListener('click', function(e) {
 			if (firstCardPicked === secondCardPicked) {
 				//console.log('woohoo, its a match!');
 				matchesFound++;
-				if (matchesFound === 4) {
+				if (matchesFound === imgIds.length) {
 					document.getElementById('status').innerHTML = '<b>WINNER!</b>';
 					updateBestScore(movesCounted);
 				}
@@ -72,11 +80,11 @@ function resetGame() {
 	gameBoard.classList.remove('disabled');
 	const gameImgs = gameBoard.querySelectorAll('img');
 	for (const img of gameImgs) img.classList.remove('disabled');
-
+	document.querySelector('#best-score').innerHTML = bestScore;
 	movesCounted = 0;
 	counter.innerHTML = '0';
 	document.getElementById('status').innerHTML = '';
-	shuffledCards = shuffle([ '01', '01', '02', '02', '03', '03', '04', '04' ]);
+	shuffledCards = shuffle(shuffledCards);
 	cardsInPlay = 0;
 	firstCardPicked = '';
 	firstPickSlot = '';
@@ -87,7 +95,8 @@ function resetGame() {
 }
 
 function updateBestScore(score){
-	if (score < bestScore){
+	if (score < bestScore || !bestScore){
+		bestScore = score;
 		localStorage.setItem('best-score',score);
 		document.querySelector('#best-score').innerHTML = 'NEW! ' + score;
 	}
