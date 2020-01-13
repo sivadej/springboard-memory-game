@@ -1,5 +1,5 @@
 //let shuffledCards = shuffle([ '01', '01', '02', '02', '03', '03', '04', '04' ]); //to set image src and IDs for matching pairs
-const imgIds = [ '01', '02', '03', '04', '05' ]; //instead of manually entering pairs, loop and push into new array twice, then shuffle
+const imgIds = [ '01', '02', '03', '04' ]; //instead of manually entering pairs, loop and push into new array twice, then shuffle
 //image src will be formatted as images/${imgId}.jpg
 let shuffledCards = [];
 for (imgId of imgIds) {
