@@ -27,7 +27,7 @@ displayCards();
 
 newGameBtn.addEventListener('click', resetGame);
 
-gameBoard.addEventListener('click', function(e) {
+gameBoard.addEventListener('click', function(e){
 	if (e.target.tagName === 'IMG') {
 		e.target.classList.add('disabled');
 		cardsInPlay++;
@@ -58,7 +58,7 @@ gameBoard.addEventListener('click', function(e) {
 	}
 });
 
-function displayCards() {
+function displayCards(){
 	gameBoard.innerHTML = '';
 	for (let [ index, card ] of shuffledCards.entries()) {
 		//index represents each slot on the board (slot0-slot7)
@@ -67,6 +67,7 @@ function displayCards() {
 		newCard.setAttribute('id', 'slot' + index);
 		newCard.setAttribute('data-id', card);
 		newCard.setAttribute('class', 'card');
+		//newCard.setAttribute('class', 'flip-box');
 		gameBoard.append(newCard);
 	}
 	let allCards = gameBoard.querySelectorAll('.card');
@@ -75,7 +76,7 @@ function displayCards() {
 	}
 }
 
-function resetGame() {
+function resetGame(){
 	//reset all counts, reshuffle card array, hide cards
 	gameBoard.classList.remove('disabled');
 	const gameImgs = gameBoard.querySelectorAll('img');
@@ -94,7 +95,7 @@ function resetGame() {
 	displayCards();
 }
 
-function updateBestScore(score) {
+function updateBestScore(score){
 	if (score < bestScore || !bestScore) {
 		bestScore = score;
 		localStorage.setItem('best-score', score);
@@ -102,13 +103,13 @@ function updateBestScore(score) {
 	}
 }
 
-function increaseCounter() {
+function increaseCounter(){
 	movesCounted++;
 	counter.innerHTML = movesCounted;
 }
 
 // Fisher-Yates (aka Knuth) Shuffle
-function shuffle(array) {
+function shuffle(array){
 	var currentIndex = array.length,
 		temporaryValue,
 		randomIndex;
@@ -123,9 +124,9 @@ function shuffle(array) {
 	return array;
 }
 
-function resetMismatch(firstSlot, secondSlot) {
+function resetMismatch(firstSlot, secondSlot){
 	gameBoard.classList.toggle('disabled'); //to prevent cards from being revealed while waiting to reset the mismatch
-	const reset = setTimeout(function() {
+	const reset = setTimeout(function(){
 		document.getElementById(firstSlot).setAttribute('src', 'images/hidden.jpg');
 		document.getElementById(firstSlot).classList.remove('disabled');
 		document.getElementById(secondSlot).setAttribute('src', 'images/hidden.jpg');
